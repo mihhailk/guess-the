@@ -137,7 +137,7 @@ class App extends Component {
                   const isAnsweredCorrectly = this.isAnswerCorrect(index);
                   return <FormGroup key={index}>
                     <Row>
-                      <Col md={8}>
+                      <Col xs={12} sm={8}>
                         <Input type={'text'}
                                autoComplete={'off'}
                                id={answerKey}
@@ -147,7 +147,7 @@ class App extends Component {
                                onChange={this.handleOnChange}
                                readOnly={showResults}/>
                       </Col>
-                      <Col md={4}>
+                      <Col xs={12} sm={4}>
                         {showResults && <Badge color={isAnsweredCorrectly ? 'success' : 'danger'}>
                           {isAnsweredCorrectly ? 'Верно' : 'Неверно'}
                         </Badge>}
@@ -155,10 +155,18 @@ class App extends Component {
                     </Row>
                   </FormGroup>
                 })}
-                {!showResults &&
-                <Button color={'primary'} onClick={this.handleAnswers} type={'submit'}>OK</Button>}
-                <Button className={'float-right'} color={'info'} onClick={this.onNext} id={'next'}>Следующий
-                  автор</Button>
+                <Row>
+                  <Col xs={12} sm={8}>{!showResults &&
+                  <Button className={'float-right mb-1'} color={'primary'} onClick={this.handleAnswers}
+                          type={'submit'}>OK</Button>}
+                  </Col>
+                </Row>
+                <Row>
+                  <Col xs={12} sm={8}>
+                    <Button className={'float-right'} color={'info'} onClick={this.onNext} id={'next'}>Следующий
+                      автор</Button>
+                  </Col>
+                </Row>
               </form>
             </Col>
           </Row>
