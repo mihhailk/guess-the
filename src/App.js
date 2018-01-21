@@ -48,6 +48,12 @@ class App extends Component {
     this.isAnswerCorrect = this.isAnswerCorrect.bind(this);
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.currentQuestion !== this.state.currentQuestion) {
+      document.getElementById(ANSWER_INPUT_PREFIX + 0).focus();
+    }
+  }
+
   handleAnswers(e) {
     e.preventDefault();
     const {answers, currentQuestion} = this.state;
@@ -83,7 +89,6 @@ class App extends Component {
       totalNumberOfAnswers: totalNumberOfAnswers + Object.keys(currentQuestion.creations).length,
       totalNumberOfCorrectAnswers: totalNumberOfCorrectAnswers + currentlyAnsweredCorrectly,
     });
-    document.getElementById(ANSWER_INPUT_PREFIX + 0).focus();
   }
 
   isAnswerCorrect(index) {
