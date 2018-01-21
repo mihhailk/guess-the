@@ -124,7 +124,7 @@ class App extends Component {
     return (
       <Fragment>
         <Navbar dark expand={'md'}>
-          <NavbarBrand>Свояк</NavbarBrand>
+          <NavbarBrand>Это свояк</NavbarBrand>
           {totalNumberOfAnswers > 0 && <div className={'text-right'}>
             <Badge color={'primary'} className={'mr-2'}>Всего: {totalNumberOfAnswers}</Badge>
             <Badge color={'success'} className={'mr-2'}>Верных: {totalNumberOfCorrectAnswers}</Badge>
