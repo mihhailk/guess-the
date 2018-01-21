@@ -1,6 +1,6 @@
 import React, {Component, Fragment} from 'react';
 import {Button, ListGroup, ListGroupItem} from 'reactstrap';
-import {maskedInput} from './mask-utils';
+import {maskedInput} from './string-utils';
 
 export class Hint extends Component {
   constructor(props) {

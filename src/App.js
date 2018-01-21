@@ -14,7 +14,7 @@ import {
   Row
 } from 'reactstrap';
 import {Hint} from './Hint';
-import {maskedInput} from './mask-utils';
+import {maskedInput, prepareString} from './string-utils';
 import data from './si.json';
 
 const ANSWER_INPUT_PREFIX = 'si-answer-';
@@ -62,7 +62,7 @@ class App extends Component {
     let numberOfCorrectAnswers = 0;
     const numberOfAnswers = Object.keys(currentQuestion.creations).length;
     Object.keys(answers).forEach((inputName) => {
-      const isCorrectAnswer = currentQuestion.creations.some(item => item.toUpperCase() === answers[inputName].trim().toUpperCase());
+      const isCorrectAnswer = currentQuestion.creations.some(item => prepareString(item) === prepareString(answers[inputName]));
       answerIndicators[inputName] = isCorrectAnswer ? 'success' : 'danger';
       if (isCorrectAnswer) {
         numberOfCorrectAnswers++;
