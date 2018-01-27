@@ -19,6 +19,9 @@
   },
   "homepage": "https://mihhailk.github.io/guess-the",
   "devDependencies": {
+    "enzyme-adapter-react-16": "^1.1.1",
+    "enzyme": "^3.3.0",
+    "react-test-renderer": "^16.2.0",
     "gh-pages": "^1.1.0"
   }
 }

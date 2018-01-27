@@ -19,14 +19,6 @@ import data from './si.json';
 
 const ANSWER_INPUT_PREFIX = 'si-answer-';
 
-const randomQuestion = (currentQuestion) => {
-  const newQuestion = data[Math.floor(Math.random() * data.length)];
-  if (newQuestion === currentQuestion) {
-    return randomQuestion(currentQuestion);
-  }
-  return newQuestion;
-};
-
 const initialState = {
   answers: {},
   answerIndicators: {},
@@ -41,15 +33,17 @@ const initialState = {
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {...initialState, currentQuestion: randomQuestion()};
+    this.data = Object.assign([], this.props.data || data);
+    this.state = {...initialState, currentQuestion: this.randomQuestion()};
     this.handleAnswers = this.handleAnswers.bind(this);
     this.handleOnChange = this.handleOnChange.bind(this);
     this.onNext = this.onNext.bind(this);
     this.isAnswerCorrect = this.isAnswerCorrect.bind(this);
+    this.randomQuestion = this.randomQuestion.bind(this);
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.currentQuestion !== this.state.currentQuestion) {
+    if (this.state.currentQuestion && prevState.currentQuestion !== this.state.currentQuestion) {
       document.getElementById(ANSWER_INPUT_PREFIX + 0).focus();
     }
   }
@@ -82,10 +76,10 @@ class App extends Component {
 
   onNext() {
     const {currentQuestion, currentlyAnsweredCorrectly, totalNumberOfAnswers, totalNumberOfCorrectAnswers} = this.state;
-    data.splice(data.indexOf(currentQuestion), 1);
+    this.data.splice(this.data.indexOf(currentQuestion), 1);
     this.setState({
       ...initialState,
-      currentQuestion: randomQuestion(currentQuestion),
+      currentQuestion: this.randomQuestion(currentQuestion),
       totalNumberOfAnswers: totalNumberOfAnswers + Object.keys(currentQuestion.creations).length,
       totalNumberOfCorrectAnswers: totalNumberOfCorrectAnswers + currentlyAnsweredCorrectly,
     });
@@ -118,21 +112,29 @@ class App extends Component {
     </Col>;
   }
 
+  randomQuestion(currentQuestion) {
+    const newQuestion = this.data[Math.floor(Math.random() * this.data.length)];
+    if (newQuestion === currentQuestion) {
+      return this.randomQuestion(currentQuestion);
+    }
+    return newQuestion;
+  };
+
   render() {
     const {answers, currentQuestion, mode, showResults, totalNumberOfAnswers, totalNumberOfCorrectAnswers} = this.state;
 
     return (
       <Fragment>
-        <Navbar dark expand={'md'}>
+        <Navbar>
           <NavbarBrand>Это свояк</NavbarBrand>
           {totalNumberOfAnswers > 0 && <div className={'text-right'}>
             <Badge color={'primary'} className={'mr-2'}>Всего: {totalNumberOfAnswers}</Badge>
             <Badge color={'success'} className={'mr-2'}>Верных: {totalNumberOfCorrectAnswers}</Badge>
-            <Badge color={'info'}>Осталось авторов: {data.length}</Badge>
+            <Badge color={'info'}>Осталось авторов: {this.data.length}</Badge>
           </div>}
         </Navbar>
-        {data.length === 0 && <h2>Игра окончена</h2>}
-        {data.length > 0 && <Container className={'my-2'}>
+        {this.data.length === 0 && <h2>Игра окончена</h2>}
+        {this.data.length > 0 && <Container className={'my-2'}>
           <Label for={'answer'}>{currentQuestion.author}</Label>
           <Row className={'mb-2'}>
             <Col md={'10'} className={'d-flex-md'}>
