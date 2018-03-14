@@ -2,6 +2,7 @@ import React from 'react';
 import {shallow} from 'enzyme';
 import mockData from './mock-si.json';
 import App from './App';
+import {PageHeader} from './components/PageHeader';
 import {Badge, Input, Label, Navbar, NavbarBrand} from 'reactstrap';
 
 function appComponent() {
@@ -10,7 +11,9 @@ function appComponent() {
 
 describe('headers', () => {
   it('renders header on first page', () => {
-    expect(appComponent().contains(<Navbar><NavbarBrand>Это свояк</NavbarBrand></Navbar>)).toBe(true);
+    expect(appComponent().contains(<PageHeader totalNumberOfAnswers={0}
+                                               totalNumberOfCorrectAnswers={0}
+                                               numberOfAuthorsLeft={mockData.length}/>)).toBe(true);
   });
 
   it('renders header on next page', () => {
@@ -21,13 +24,9 @@ describe('headers', () => {
     component.find('#next').simulate('click');
     expect(component.state().totalNumberOfCorrectAnswers).toEqual(0);
     expect(component.state().totalNumberOfAnswers).toEqual(2);
-    expect(component.contains(<Navbar><NavbarBrand>Это свояк</NavbarBrand>
-      <div className={'text-right'}>
-        <Badge color={'primary'} className={'mr-2'}>Всего: 2</Badge>
-        <Badge color={'success'} className={'mr-2'}>Верных: 0</Badge>
-        <Badge color={'info'}>Осталось авторов: 2</Badge>
-      </div>
-    </Navbar>)).toBe(true);
+    expect(component.contains(<PageHeader totalNumberOfAnswers={2}
+                                          totalNumberOfCorrectAnswers={0}
+                                          numberOfAuthorsLeft={mockData.length - 1}/>)).toBe(true);
   });
 });
 
