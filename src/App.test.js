@@ -1,49 +1,63 @@
 import React from 'react';
-import {shallow} from 'enzyme';
+import {mount, shallow} from 'enzyme';
 import mockData from './mock-si.json';
 import App from './App';
 import {PageHeader} from './components/PageHeader';
-import {Badge, Input, Label, Navbar, NavbarBrand} from 'reactstrap';
-
-function appComponent() {
-  return shallow(<App data={mockData}/>);
-}
+import {Input, Label} from 'reactstrap';
 
 describe('headers', () => {
   it('renders header on first page', () => {
-    expect(appComponent().contains(<PageHeader totalNumberOfAnswers={0}
-                                               totalNumberOfCorrectAnswers={0}
-                                               numberOfAuthorsLeft={mockData.length}/>)).toBe(true);
+    const app = shallow(<App data={mockData}/>);
+
+    const pageHeader = app.find(PageHeader);
+    expect(pageHeader.props().totalNumberOfAnswers).toEqual(0);
+    expect(pageHeader.props().totalNumberOfCorrectAnswers).toEqual(0);
+    expect(pageHeader.props().numberOfAuthorsLeft).toEqual(mockData.length);
   });
 
   it('renders header on next page', () => {
-    App.prototype.randomQuestion = jest.fn(() => {
+    const mockRandomQuestion = jest.fn(() => {
       return mockData[0];
     });
-    const component = appComponent();
-    component.find('#next').simulate('click');
-    expect(component.state().totalNumberOfCorrectAnswers).toEqual(0);
-    expect(component.state().totalNumberOfAnswers).toEqual(2);
-    expect(component.contains(<PageHeader totalNumberOfAnswers={2}
-                                          totalNumberOfCorrectAnswers={0}
-                                          numberOfAuthorsLeft={mockData.length - 1}/>)).toBe(true);
+    App.prototype.randomQuestion = mockRandomQuestion;
+
+    const app = mount(<App data={mockData}/>);
+
+    app.find('Button#next').simulate('click');
+    expect(mockRandomQuestion).toHaveBeenCalled();
+    expect(app.state().totalNumberOfCorrectAnswers).toEqual(0);
+    expect(app.state().totalNumberOfAnswers).toEqual(2);
+    const pageHeader = app.find(PageHeader);
+    expect(pageHeader.props().totalNumberOfAnswers).toEqual(2);
+    expect(pageHeader.props().totalNumberOfCorrectAnswers).toEqual(0);
+    expect(pageHeader.props().numberOfAuthorsLeft).toEqual(mockData.length - 1);
+    ;
   });
 });
 
 describe('author and creations', () => {
   it('renders author name correctly', () => {
-    App.prototype.randomQuestion = jest.fn(() => {
+    const mockRandomQuestion = jest.fn(() => {
       return mockData[0];
     });
-    const component = appComponent();
+    App.prototype.randomQuestion = mockRandomQuestion;
+
+    const component = mount(<App data={mockData}/>);
+
+    expect(mockRandomQuestion).toHaveBeenCalled();
     expect(component.contains(<Label for={'answer'}>Philip K. Dick</Label>)).toBe(true);
   });
 
   it('renders correct number of creations', () => {
-    App.prototype.randomQuestion = jest.fn(() => {
+    const mockRandomQuestion = jest.fn(() => {
       return mockData[1];
     });
-    expect(appComponent().find(Input).length).toEqual(3);
+    App.prototype.randomQuestion = mockRandomQuestion;
+
+    const app = mount(<App data={mockData}/>);
+
+    expect(mockRandomQuestion).toHaveBeenCalled();
+    expect(app.find(Input).length).toEqual(3);
   });
 });
 
@@ -56,10 +70,11 @@ describe('page flow', () => {
       .mockImplementationOnce(() => mockData[2]);
     App.prototype.randomQuestion = mockRandomQuestion;
 
-    const component = appComponent();
-    component.find('#next').simulate('click');
-    component.find('#next').simulate('click');
-    component.find('#next').simulate('click');
-    expect(component.contains(<h2>Игра окончена</h2>)).toBe(true);
+    const component = mount(<App data={mockData}/>);
+    component.find('Button#next').simulate('click');
+    component.find('Button#next').simulate('click');
+    component.find('Button#next').simulate('click');
+
+    expect(component.find('h2').text()).toEqual('Игра окончена');
   });
 });

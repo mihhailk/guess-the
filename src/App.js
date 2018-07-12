@@ -23,7 +23,10 @@ class App extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (this.state.currentQuestion && prevState.currentQuestion !== this.state.currentQuestion) {
-      document.getElementById(ANSWER_INPUT_PREFIX + 0).focus();
+      const firstInput = document.getElementById(ANSWER_INPUT_PREFIX + 0);
+      if (firstInput) {
+        firstInput.focus();
+      }
     }
   }
 
