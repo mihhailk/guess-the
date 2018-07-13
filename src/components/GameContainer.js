@@ -107,7 +107,7 @@ export class GameContainer extends Component {
             <Row>
               <Col xs={12} sm={8}>
                 <Button className={'float-right'} color={'info'}
-                        onClick={() => onNext(0)}
+                        onClick={() => onNext(showResults ? this.state.currentlyAnsweredCorrectly : 0)}
                         id={'next'}>Следующий автор</Button>
               </Col>
             </Row>
