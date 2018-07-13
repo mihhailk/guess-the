@@ -37,7 +37,10 @@ export class GameContainer extends Component {
       everythingAnsweredCorrectly: numberOfCorrectAnswers === numberOfAnswers,
       currentlyAnsweredCorrectly: numberOfCorrectAnswers
     });
-    document.getElementById('next').focus();
+    const nextButton = document.getElementById('next');
+    if (nextButton) {
+      nextButton.focus();
+    }
   }
 
   isAnswerCorrect(index) {
