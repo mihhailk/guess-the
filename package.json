@@ -3,11 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "bootstrap": "^4.0.0-beta.3",
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0",
-    "react-scripts": "1.1.0",
-    "reactstrap": "^5.0.0-alpha.4"
+    "bootstrap": "4.4.1",
+    "react": "16.12.0",
+    "react-dom": "16.12.0",
+    "react-scripts": "3.3.0",
+    "reactstrap": "8.3.2"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -19,8 +19,20 @@
   },
   "homepage": "https://mihhailk.github.io/guess-the",
   "devDependencies": {
-    "enzyme-adapter-react-16": "^1.1.1",
-    "enzyme": "^3.3.0",
-    "gh-pages": "^1.1.0"
+    "enzyme": "3.11.0",
+    "enzyme-adapter-react-16": "1.15.2",
+    "gh-pages": "2.2.0"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }
