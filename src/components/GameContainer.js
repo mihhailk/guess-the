@@ -12,7 +12,7 @@ export class GameContainer extends Component {
     this.isAnswerCorrect = this.isAnswerCorrect.bind(this);
   }
 
-  componentWillUpdate(prevProps) {
+  componentDidUpdate(prevProps) {
     if (this.props.currentQuestion !== prevProps.currentQuestion) {
       this.setState({showResults: false, answerIndicators: {}});
     }
