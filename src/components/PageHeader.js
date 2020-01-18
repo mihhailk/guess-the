@@ -1,13 +1,13 @@
 import React from 'react';
 import {Badge, Navbar, NavbarBrand} from 'reactstrap';
 
-export const PageHeader = ({totalNumberOfAnswers, totalNumberOfCorrectAnswers, numberOfAuthorsLeft}) => {
+export const PageHeader = ({numberOfAuthorsLeft, totalNumberOfAnswers, totalNumberOfCorrectAnswers}) => {
   return <Navbar>
     <NavbarBrand>Это свояк</NavbarBrand>
-    <div className={'text-right'}>
+    {numberOfAuthorsLeft > -1 && <div className={'text-right'}>
+      <Badge color={'info'} className={'mr-2'}>Осталось авторов: {numberOfAuthorsLeft}</Badge>
       <Badge color={'primary'} className={'mr-2'}>Всего: {totalNumberOfAnswers}</Badge>
-      <Badge color={'success'} className={'mr-2'}>Верных: {totalNumberOfCorrectAnswers}</Badge>
-      <Badge color={'info'}>Осталось авторов: {numberOfAuthorsLeft}</Badge>
-    </div>
+      <Badge color={'success'}>Верных: {totalNumberOfCorrectAnswers}</Badge>
+    </div>}
   </Navbar>;
 };
