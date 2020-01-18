@@ -5,6 +5,7 @@ import {GameOver} from "./components/GameOver";
 import {ANSWER_INPUT_PREFIX, ANSWERED_QUESTIONS_IDS, TOTAL_ANSWERS_KEY, TOTAL_CORRECT_ANSWERS_KEY} from './constants';
 import * as ls from 'local-storage';
 import data from './si.json';
+import './App.css';
 
 const initialState = {
   answers: {},
