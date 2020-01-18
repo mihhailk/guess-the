@@ -71,7 +71,7 @@ export class GameContainer extends Component {
   }
 
   render() {
-    const {answers, currentQuestion, mode, onInputChange, onNext} = this.props;
+    const {answers, currentQuestion, mode, onInputChange, onNext, onRestart} = this.props;
     const {showResults} = this.state;
     return <Container className={'my-2'}>
       <Label for={'answer'}>{currentQuestion.author}</Label>
@@ -104,12 +104,12 @@ export class GameContainer extends Component {
             <Row>
               <Col xs={12} sm={8}>{!showResults &&
               <Button className={'float-right mb-1'} color={'primary'} onClick={this.handleAnswers}
-                      type={'submit'}>OK</Button>}
+                      type={'submit'}>Проверить</Button>}
               </Col>
             </Row>
             <Row>
               <Col xs={12} sm={8}>
-                <Button className={'float-right'} color={'info'}
+                <Button className={'float-right'} color={'secondary'}
                         onClick={() => onNext(showResults ? this.state.currentlyAnsweredCorrectly : 0)}
                         id={'next'}>Следующий автор</Button>
               </Col>
@@ -119,6 +119,7 @@ export class GameContainer extends Component {
       </Row>
       {!showResults && <Hint answersToBeMasked={currentQuestion.creations}/>}
       {showResults && <div>{this.showAllAnswers()}</div>}
+      <Button className={'mt-5'} color={'link'} block onClick={onRestart}>Начать заново</Button>
     </Container>;
   }
 }

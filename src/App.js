@@ -120,7 +120,8 @@ class App extends Component {
                          answers={answers}
                          mode={mode}
                          onNext={this.handleOnNext}
-                         onInputChange={this.handleOnInputChange}/>
+                         onInputChange={this.handleOnInputChange}
+                         onRestart={this.startOver}/>
         }
       </Fragment>
     );
