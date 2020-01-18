@@ -22,20 +22,17 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.data = Object.assign([], this.props.data || data);
-    this.state = this.getInitialState();
-    this.handleOnNext = this.handleOnNext.bind(this);
-    this.handleOnInputChange = this.handleOnInputChange.bind(this);
-    this.randomQuestion = this.randomQuestion.bind(this);
-    this.startOver = this.startOver.bind(this);
-  }
-
-  getInitialState() {
     const answeredIds = answeredQuestionsIds();
-    return {
+    this.state = {
       ...initialState,
       numberOfAuthorsLeft: this.data.filter((question, id) => !answeredIds.includes(id)).length,
       currentQuestion: this.randomQuestion()
     };
+
+    this.handleOnNext = this.handleOnNext.bind(this);
+    this.handleOnInputChange = this.handleOnInputChange.bind(this);
+    this.randomQuestion = this.randomQuestion.bind(this);
+    this.startOver = this.startOver.bind(this);
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -47,7 +44,7 @@ class App extends Component {
     }
 
     if (this.state.answeredQuestionId !== null && this.state.answeredQuestionId !== prevState.answeredQuestionId) {
-      let answered = answeredQuestionsIds();
+      const answered = answeredQuestionsIds();
       answered.push(this.state.answeredQuestionId);
       ls.set(ANSWERED_QUESTIONS_IDS, JSON.stringify(answered));
     }
@@ -79,10 +76,10 @@ class App extends Component {
   }
 
   randomQuestion(currentQuestion) {
-    let unansweredQuestions = this.data.filter((question, id) => !answeredQuestionsIds().includes(id));
+    const unansweredQuestions = this.data.filter((question, id) => !answeredQuestionsIds().includes(id));
     if (unansweredQuestions.length === 0) return null;
 
-    let nextQuestionIndex = Math.floor(Math.random() * unansweredQuestions.length);
+    const nextQuestionIndex = Math.floor(Math.random() * unansweredQuestions.length);
     const newQuestion = unansweredQuestions[nextQuestionIndex];
     if (newQuestion === currentQuestion) {
       return this.randomQuestion(currentQuestion);
@@ -92,7 +89,15 @@ class App extends Component {
 
   startOver() {
     ls.clear();
-    this.setState(this.getInitialState());
+    this.setState({
+      answers: {},
+      mode: 'hard',
+      totalNumberOfAnswers: 0,
+      totalNumberOfCorrectAnswers: 0,
+      answeredQuestionId: null,
+      numberOfAuthorsLeft: this.data.length,
+      currentQuestion: this.randomQuestion()
+    });
   }
 
 
