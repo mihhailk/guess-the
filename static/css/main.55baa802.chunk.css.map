@@ -1,0 +1,1 @@
+{"version":3,"sources":["App.css"],"names":[],"mappings":"AAAA,mCACE,KACE,qBAAuB,CACvB,UACF,CACF","file":"main.55baa802.chunk.css","sourcesContent":["@media (prefers-color-scheme: dark) {\n  body {\n    background-color: black;\n    color: #ccc;\n  }\n}"]}

@@ -1,22 +1,25 @@
 {
   "files": {
-    "main.js": "/guess-the/static/js/main.d4f1f861.chunk.js",
-    "main.js.map": "/guess-the/static/js/main.d4f1f861.chunk.js.map",
+    "main.css": "/guess-the/static/css/main.55baa802.chunk.css",
+    "main.js": "/guess-the/static/js/main.dc5bece8.chunk.js",
+    "main.js.map": "/guess-the/static/js/main.dc5bece8.chunk.js.map",
     "runtime-main.js": "/guess-the/static/js/runtime-main.ad26ad52.js",
     "runtime-main.js.map": "/guess-the/static/js/runtime-main.ad26ad52.js.map",
     "static/css/2.67123b20.chunk.css": "/guess-the/static/css/2.67123b20.chunk.css",
-    "static/js/2.9c03532d.chunk.js": "/guess-the/static/js/2.9c03532d.chunk.js",
-    "static/js/2.9c03532d.chunk.js.map": "/guess-the/static/js/2.9c03532d.chunk.js.map",
+    "static/js/2.a9c89a89.chunk.js": "/guess-the/static/js/2.a9c89a89.chunk.js",
+    "static/js/2.a9c89a89.chunk.js.map": "/guess-the/static/js/2.a9c89a89.chunk.js.map",
     "index.html": "/guess-the/index.html",
-    "precache-manifest.07f9e5cbbeb5d91a26be09a792d5acc2.js": "/guess-the/precache-manifest.07f9e5cbbeb5d91a26be09a792d5acc2.js",
+    "precache-manifest.ad78011f8435ab90541b431077ede73b.js": "/guess-the/precache-manifest.ad78011f8435ab90541b431077ede73b.js",
     "service-worker.js": "/guess-the/service-worker.js",
     "static/css/2.67123b20.chunk.css.map": "/guess-the/static/css/2.67123b20.chunk.css.map",
-    "static/js/2.9c03532d.chunk.js.LICENSE": "/guess-the/static/js/2.9c03532d.chunk.js.LICENSE"
+    "static/css/main.55baa802.chunk.css.map": "/guess-the/static/css/main.55baa802.chunk.css.map",
+    "static/js/2.a9c89a89.chunk.js.LICENSE": "/guess-the/static/js/2.a9c89a89.chunk.js.LICENSE"
   },
   "entrypoints": [
     "static/js/runtime-main.ad26ad52.js",
     "static/css/2.67123b20.chunk.css",
-    "static/js/2.9c03532d.chunk.js",
-    "static/js/main.d4f1f861.chunk.js"
+    "static/js/2.a9c89a89.chunk.js",
+    "static/css/main.55baa802.chunk.css",
+    "static/js/main.dc5bece8.chunk.js"
   ]
 }
