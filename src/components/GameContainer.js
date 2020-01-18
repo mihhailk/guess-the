@@ -1,4 +1,4 @@
-import React, {Component, Fragment} from 'react';
+import React, {Component} from 'react';
 import {Badge, Button, Col, Container, FormGroup, Input, Label, ListGroup, ListGroupItem, Row} from 'reactstrap';
 import {Hint} from './Hint';
 import {ANSWER_INPUT_PREFIX} from '../constants';
@@ -64,9 +64,9 @@ export class GameContainer extends Component {
         {currentQuestion.creations.map((item, index) => {
           return <ListGroupItem key={index} color={'success'}>{item}</ListGroupItem>
         })}
-        {currentQuestion.notes &&
-        <Fragment><ListGroupItem/><ListGroupItem color="info">{currentQuestion.notes}</ListGroupItem></Fragment>}
       </ListGroup>
+      {currentQuestion.notes &&
+      <ListGroup><ListGroupItem color="info" className={'mt-4'}>{currentQuestion.notes}</ListGroupItem></ListGroup>}
     </Col>;
   }
 

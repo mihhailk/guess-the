@@ -75,10 +75,10 @@ describe('page flow', () => {
     expect(Object.keys(app.state().answers).length).toEqual(1);
     expect(app.state().answers['si-answer-0']).toEqual('Do Androids Dream of Electric Sheep?');
     expect(app.find('h2').text()).toEqual('Все правильные ответы:');
-    expect(app.find('ListGroupItem').length).toEqual(4);
+    expect(app.find('ListGroupItem').length).toEqual(3);
     expect(app.find('ListGroupItem').at(0).text()).toEqual('Do Androids Dream of Electric Sheep?');
     expect(app.find('ListGroupItem').at(1).text()).toEqual('The Man in the High Castle');
-    expect(app.find('ListGroupItem').at(3).text()).toEqual('K as Kindred');
+    expect(app.find('ListGroupItem').at(2).text()).toEqual('K as Kindred');
   });
 
   it('shows notification on final page', () => {
