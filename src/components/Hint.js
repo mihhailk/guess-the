@@ -11,7 +11,10 @@ export class Hint extends Component {
   render() {
     const {answersToBeMasked} = this.props;
     return (<Fragment>
-      <Button outline color={'dark'} size={'sm'} onClick={() => this.setState({showHint: !this.state.showHint})}>
+      <Button color={'secondary'}
+              size={'sm'}
+              onClick={() => this.setState({showHint: !this.state.showHint})}
+              title={'Подскажи'}>
         <span>&nbsp;?&nbsp;</span>
       </Button>
       {this.state.showHint && <ListGroup className={'mt-2'}>{answersToBeMasked.map((item, index) => {
