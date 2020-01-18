@@ -1,7 +1,7 @@
 import React, {Component, Fragment} from 'react';
 import {PageHeader} from './components/PageHeader';
-import {Button} from 'reactstrap';
 import {GameContainer} from './components/GameContainer';
+import {GameOver} from "./components/GameOver";
 import {ANSWER_INPUT_PREFIX, ANSWERED_QUESTIONS_IDS, TOTAL_ANSWERS_KEY, TOTAL_CORRECT_ANSWERS_KEY} from './constants';
 import * as ls from 'local-storage';
 import data from './si.json';
@@ -107,10 +107,7 @@ class App extends Component {
                     totalNumberOfCorrectAnswers={totalNumberOfCorrectAnswers}
                     numberOfAuthorsLeft={numberOfAuthorsLeft}/>
         {
-          numberOfAuthorsLeft === 0 && <div className={'text-center'}>
-            <h2>Игра окончена</h2>
-            <Button onClick={this.startOver} color={'primary'} className={'primary mt-2'}>Начать заново</Button>
-          </div>
+          numberOfAuthorsLeft === 0 && <GameOver onRestart={this.startOver}/>
         }
         {
           numberOfAuthorsLeft >= 0 && currentQuestion !== null &&
