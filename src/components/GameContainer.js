@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Badge, Button, Col, Container, FormGroup, Input, Label, ListGroup, ListGroupItem, Row} from 'reactstrap';
 import {Hint} from './Hint';
 import {ANSWER_INPUT_PREFIX} from '../constants';
-import {maskedInput, prepareString} from '../string-utils';
+import {maskedInput, areSimilar} from '../string-utils';
 
 export class GameContainer extends Component {
   constructor(props) {
@@ -26,7 +26,9 @@ export class GameContainer extends Component {
     let numberOfCorrectAnswers = 0;
     const numberOfAnswers = Object.keys(currentQuestion.creations).length;
     Object.keys(answers).forEach((inputName) => {
-      const isCorrectAnswer = currentQuestion.creations.some(item => prepareString(item) === prepareString(answers[inputName]));
+      const isCorrectAnswer = currentQuestion.creations.some(
+        correctAnswer => areSimilar(correctAnswer, answers[inputName])
+      );
       answerIndicators[inputName] = isCorrectAnswer ? 'success' : 'danger';
       if (isCorrectAnswer) {
         numberOfCorrectAnswers++;
