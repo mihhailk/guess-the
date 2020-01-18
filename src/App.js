@@ -1,24 +1,41 @@
 import React, {Component, Fragment} from 'react';
 import {PageHeader} from './components/PageHeader';
+import {Button} from 'reactstrap';
 import {GameContainer} from './components/GameContainer';
-import {ANSWER_INPUT_PREFIX} from './constants';
+import {ANSWER_INPUT_PREFIX, ANSWERED_QUESTIONS_IDS, TOTAL_ANSWERS_KEY, TOTAL_CORRECT_ANSWERS_KEY} from './constants';
+import * as ls from 'local-storage';
 import data from './si.json';
 
 const initialState = {
   answers: {},
   mode: 'hard',
-  totalNumberOfAnswers: 0,
-  totalNumberOfCorrectAnswers: 0
+  totalNumberOfAnswers: ls.get(TOTAL_ANSWERS_KEY) || 0,
+  totalNumberOfCorrectAnswers: ls.get(TOTAL_CORRECT_ANSWERS_KEY) || 0,
+  answeredQuestionId: null
+};
+
+const answeredQuestionsIds = () => {
+  return JSON.parse(ls.get(ANSWERED_QUESTIONS_IDS)) || [];
 };
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.data = Object.assign([], this.props.data || data);
-    this.state = {...initialState, currentQuestion: this.randomQuestion()};
+    this.state = this.getInitialState();
     this.handleOnNext = this.handleOnNext.bind(this);
     this.handleOnInputChange = this.handleOnInputChange.bind(this);
     this.randomQuestion = this.randomQuestion.bind(this);
+    this.startOver = this.startOver.bind(this);
+  }
+
+  getInitialState() {
+    const answeredIds = answeredQuestionsIds();
+    return {
+      ...initialState,
+      numberOfAuthorsLeft: this.data.filter((question, id) => !answeredIds.includes(id)).length,
+      currentQuestion: this.randomQuestion()
+    };
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -28,6 +45,20 @@ class App extends Component {
         firstInput.focus();
       }
     }
+
+    if (this.state.answeredQuestionId !== null && this.state.answeredQuestionId !== prevState.answeredQuestionId) {
+      let answered = answeredQuestionsIds();
+      answered.push(this.state.answeredQuestionId);
+      ls.set(ANSWERED_QUESTIONS_IDS, JSON.stringify(answered));
+    }
+
+    if (this.state.totalNumberOfAnswers !== prevState.totalNumberOfAnswers) {
+      ls.set(TOTAL_ANSWERS_KEY, this.state.totalNumberOfAnswers);
+    }
+
+    if (this.state.totalNumberOfCorrectAnswers !== prevState.totalNumberOfCorrectAnswers) {
+      ls.set(TOTAL_CORRECT_ANSWERS_KEY, this.state.totalNumberOfCorrectAnswers);
+    }
   }
 
   handleOnInputChange(event) {
@@ -35,38 +66,60 @@ class App extends Component {
   }
 
   handleOnNext(currentlyAnsweredCorrectly) {
-    const {currentQuestion, totalNumberOfAnswers, totalNumberOfCorrectAnswers} = this.state;
-    this.data.splice(this.data.indexOf(currentQuestion), 1);
+    const {currentQuestion, totalNumberOfAnswers, totalNumberOfCorrectAnswers, numberOfAuthorsLeft} = this.state;
+    const isGameOver = numberOfAuthorsLeft - 1 === 0;
     this.setState({
       ...initialState,
-      currentQuestion: this.randomQuestion(currentQuestion),
+      currentQuestion: isGameOver ? null : this.randomQuestion(currentQuestion),
       totalNumberOfAnswers: totalNumberOfAnswers + Object.keys(currentQuestion.creations).length,
       totalNumberOfCorrectAnswers: totalNumberOfCorrectAnswers + currentlyAnsweredCorrectly,
+      numberOfAuthorsLeft: numberOfAuthorsLeft - 1,
+      answeredQuestionId: this.data.indexOf(currentQuestion)
     });
   }
 
   randomQuestion(currentQuestion) {
-    const newQuestion = this.data[Math.floor(Math.random() * this.data.length)];
+    let unansweredQuestions = this.data.filter((question, id) => !answeredQuestionsIds().includes(id));
+    if (unansweredQuestions.length === 0) return null;
+
+    let nextQuestionIndex = Math.floor(Math.random() * unansweredQuestions.length);
+    const newQuestion = unansweredQuestions[nextQuestionIndex];
     if (newQuestion === currentQuestion) {
       return this.randomQuestion(currentQuestion);
     }
     return newQuestion;
-  };
+  }
+
+  startOver() {
+    ls.clear();
+    this.setState(this.getInitialState());
+  }
+
 
   render() {
-    const {answers, currentQuestion, mode, totalNumberOfAnswers, totalNumberOfCorrectAnswers} = this.state;
+    const {
+      answers, currentQuestion, mode, totalNumberOfAnswers, totalNumberOfCorrectAnswers, numberOfAuthorsLeft
+    } = this.state;
 
     return (
       <Fragment>
         <PageHeader totalNumberOfAnswers={totalNumberOfAnswers}
                     totalNumberOfCorrectAnswers={totalNumberOfCorrectAnswers}
-                    numberOfAuthorsLeft={this.data.length}/>
-        {this.data.length === 0 && <h2>Игра окончена</h2>}
-        {this.data.length > 0 && <GameContainer currentQuestion={currentQuestion}
-                                                answers={answers}
-                                                mode={mode}
-                                                onNext={this.handleOnNext}
-                                                onInputChange={this.handleOnInputChange}/>}
+                    numberOfAuthorsLeft={numberOfAuthorsLeft}/>
+        {
+          numberOfAuthorsLeft === 0 && <div className={'text-center'}>
+            <h2>Игра окончена</h2>
+            <Button onClick={this.startOver} color={'primary'} className={'primary mt-2'}>Начать заново</Button>
+          </div>
+        }
+        {
+          numberOfAuthorsLeft >= 0 && currentQuestion !== null &&
+          <GameContainer currentQuestion={currentQuestion}
+                         answers={answers}
+                         mode={mode}
+                         onNext={this.handleOnNext}
+                         onInputChange={this.handleOnInputChange}/>
+        }
       </Fragment>
     );
   }
