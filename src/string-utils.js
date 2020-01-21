@@ -7,6 +7,7 @@ export const maskedInput = (item) => {
 };
 
 export const areSimilar = (one, other) => {
+  if (one.length === 1 && other.length === 1) return one === other;
   return levenshtein(prepareString(one), prepareString(other)) < 2;
 };
 
