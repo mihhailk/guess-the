@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "54ce6574c96467716ddc20f49cbc0611",
+    "revision": "5292b30b5e4c3d1ba3dadc0c43e83ce8",
     "url": "/guess-the/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/guess-the/static/css/2.67123b20.chunk.css"
   },
   {
-    "revision": "f52fe64ccfc918fa54fd",
+    "revision": "9e5357c2eb7238e27fcd",
     "url": "/guess-the/static/css/main.55baa802.chunk.css"
   },
   {
@@ -20,8 +20,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/guess-the/static/js/2.a9c89a89.chunk.js.LICENSE"
   },
   {
-    "revision": "f52fe64ccfc918fa54fd",
-    "url": "/guess-the/static/js/main.dc5bece8.chunk.js"
+    "revision": "9e5357c2eb7238e27fcd",
+    "url": "/guess-the/static/js/main.7c83e268.chunk.js"
   },
   {
     "revision": "0125f2fc14905a63b459",
